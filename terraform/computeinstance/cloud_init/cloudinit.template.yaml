@@ -1,0 +1,59 @@
+
+output: {all: '| tee -a /tmp/oas_install.log'}
+
+logcfg: |
+  [formatters]
+  format=%(levelname)s %(asctime)s: %(message)s
+  
+write_files:
+  - path: /tmp/generate_biconfig.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${generate_biconfig_content}
+        
+  - path: /tmp/generate_createdomainscript.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${generate_createdomainscript_content}
+
+  - path: /tmp/generate_oasfirewallportsconfig.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${generate_firewallportsconfig_content}
+
+  - path: /tmp/generate_openfirewallportsscript.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${generate_firewallportsscript_content}
+     
+  - path: /tmp/generate_installerscript.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${generate_installerscript_content}
+
+runcmd:
+  - echo "generating biconfig response file"
+  - bash /tmp/generate_biconfig.sh ${admin_user_name} ${admin_password} ${connect_string} ${new_db_admin_username} ${new_db_password} ${oas_rcu_schema_prefix} ${oas_rcu_schema_password}
+  - echo "generating script files for firewall config and opening firewall ports"
+  - bash /tmp/generate_oasfirewallportsconfig.sh
+  - bash /tmp/generate_openfirewallportsscript.sh
+  - sudo chmod 0755 /tmp/open_oas_firewall_ports.sh  
+  - echo "generating script file that creates domain"
+  - bash /tmp/generate_createdomainscript.sh
+  - sudo chmod 0755 /tmp/create_oas_domain.sh 
+  - echo "generating oas installer script"
+  - bash /tmp/generate_installerscript.sh
+  - sudo chmod 0755 /tmp/oas_installer.sh
+  - echo "delete generator files"
+  - sudo rm /tmp/generate_biconfig.sh
+  - sudo rm /tmp/generate_createdomainscript.sh
+  - sudo rm /tmp/generate_oasfirewallportsconfig.sh
+  - sudo rm /tmp/generate_openfirewallportsscript.sh
+  - sudo rm /tmp/generate_installerscript.sh
+  - bash /tmp/oas_installer.sh
+  - touch /tmp/oas_install.finish

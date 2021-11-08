@@ -1,250 +1,210 @@
-# oci-quickstart-template
-
-The [Oracle Cloud Infrastructure (OCI) Quick Start](https://github.com/oracle-quickstart?q=oci-quickstart) is a collection of examples that allow Oracle Cloud Infrastructure users to get a quick start deploying advanced infrastructure on OCI.
-
-The oci-quickstart-template repository contains the template that can be used for accelerating the construction of quickstarts that runs from local Terraform CLI, [OCI Resource Manager](https://docs.cloud.oracle.com/en-us/iaas/Content/ResourceManager/Concepts/resourcemanager.htm) and [OCI Cloud Shell](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cloudshellintro.htm).
-
-Simple is a sample quickstart terraform template that deploys a virtual machine on a Virtual Cloud Network.
-Simple can be customized to subscribe and launch Marketplace images, Platform images or Custom images.
-
-This repo is under active development.  Building open source software is a community effort.  We're excited to engage with the community building this.
-
-## Resource Manager Deployment
-
-This Quick Start uses [OCI Resource Manager](https://docs.cloud.oracle.com/iaas/Content/ResourceManager/Concepts/resourcemanager.htm) to make deployment easy, sign up for an [OCI account](https://cloud.oracle.com/en_US/tryit) if you don't have one, and just click the button below:
-
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://console.us-ashburn-1.oraclecloud.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-quickstart-template/archive/master.zip)
-
-After logging into the console you'll be taken through the same steps described
-in the [Deploy](#deploy) section below.
-
-
-Note, if you use this template to create another repo you'll need to change the link for the button to point at your repo.
-
-## Local Development
-
-First off we'll need to do some pre deploy setup.  That's all detailed [here](https://github.com/oracle/oci-quickstart-prerequisites).
-
-Note, the instructions below build a `.zip` file from you local copy for use in ORM.
-If you want to not use ORM and deploy with the terraform CLI you need to rename
-`provider.tf.cli -> provider.tf`. This is because authentication works slightly
-differently in ORM vs the CLI. This file is ignored by the build process below.
-
-Make sure you have terraform v0.14+ cli installed and accessible from your terminal.
-
-### Build
-
-Simply `build` your package and follow the [Resource Manager instructions](https://docs.cloud.oracle.com/en-us/iaas/Content/ResourceManager/Tasks/managingstacksandjobs.htm#console) for how to create a stack.  Prior to building the Stack, you may want to modify some parts of the deployment detailed below.
-
-In order to `build` the zip file with the latest changes you made to this code, you can simply go to [build-orm](./build-orm) folder and use terraform to generate a new zip file:
-
-At first time, you are required to initialize the terraform modules used by the template with  `terraform init` command:
-
-```bash
-$ terraform init
-
-Initializing the backend...
-
-Initializing provider plugins...
-- Finding latest version of hashicorp/archive...
-- Installing hashicorp/archive v2.1.0...
-- Installed hashicorp/archive v2.1.0 (signed by HashiCorp)
-
-Terraform has created a lock file .terraform.lock.hcl to record the provider
-selections it made above. Include this file in your version control repository
-so that Terraform can guarantee to make the same selections by default when
-you run "terraform init" in the future.
-
-Terraform has been successfully initialized!
-
-You may now begin working with Terraform. Try running "terraform plan" to see
-any changes that are required for your infrastructure. All Terraform commands
-should now work.
-
-If you ever set or change modules or backend configuration for Terraform,
-rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
-```
-
-Once terraform is initialized, just run `terraform apply` to generate ORM zip file.
-
-```bash
-$ terraform apply
-
-data.archive_file.generate_zip: Refreshing state...
-
-Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
-```
-
-This command will package the content of `simple` folder into a zip and will store it in the `build-orm\dist` folder. You can check the content of the file by running `unzip -l dist/orm.zip`:
-
-```bash
-$ unzip -l dist/orm.zip
-Archive:  dist/orm.zip
-  Length      Date    Time    Name
----------  ---------- -----   ----
-     1140  01-01-2049 00:00   compute.tf
-      680  01-01-2049 00:00   data_sources.tf
-     1632  01-01-2049 00:00   image_subscription.tf
-     1359  01-01-2049 00:00   locals.tf
-    13548  01-01-2049 00:00   marketplace.yaml
-     2001  01-01-2049 00:00   network.tf
-     2478  01-01-2049 00:00   nsg.tf
-      830  01-01-2049 00:00   oci_images.tf
-     1092  01-01-2049 00:00   outputs.tf
-       44  01-01-2049 00:00   scripts/example.sh
-     4848  01-01-2049 00:00   variables.tf
-      311  01-01-2049 00:00   versions.tf
----------                     -------
-    29963                     12 files
-```
-
-### Deploy
-
-1. [Login](https://console.us-ashburn-1.oraclecloud.com/resourcemanager/stacks/create) to Oracle Cloud Infrastructure to import the stack
-    > `Home > Solutions & Platform > Resource Manager > Stacks > Create Stack`
-
-2. Upload the `orm.zip` and provide a name and description for the stack
-![Create Stack](./images/create_orm_stack.png)
-
-3. Configure the Stack. The UI will present the variables to the user dynamically, based on their selections. These are the configuration options:
-
-> Compute Configuration
-
-|          VARIABLE          |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|COMPUTE COMPARTMENT         | Compartment for Compute resources, including Marketplace subscription |
-|INSTANCE NAME               | Compute instance name|
-|DNS HOSTNAME LABEL          | DNS Hostname|
-|COMPUTE SHAPE               | Compatible Compute shape|
-|FLEX SHAPE OCPUS            | Number of OCPUs, only available for VM.Standard.E3.Flex compute shape|
-|AVAILABILITY DOMAIN         | Availability Domain|
-|PUBLIC SSH KEY STRING       | RSA PUBLIC SSH key string used for sign in to the OS|
-
-> Virtual Cloud Network
-
-|          VARIABLE          |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|NETWORK COMPARTMENT         | Compartment for all Virtual Cloud Network resources|
-|NETWORK STRATEGY            | `Create New VCN and Subnet`: Create new network resources during apply. <br> `Use Existing VCN and Subnet`: Let user select pre-existent network resources.|
-|CONFIGURATION STRATEGY      | `Use Recommended Configuration`: Use default configuration defined by the Terraform template. <br> `Customize Network Configuration`: Allow user to customize network configuration such as name, dns label, cidr block for VCN and Subnet.|
-
-> Virtual Cloud Network - Customize Network Configuration
-
-|          VARIABLE          |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|NAME                        | VCN Display Name|
-|DNS LABEL                   | VCN DNS LABEL|
-|CIDR BLOCK                  | The CIDR of the new Virtual Cloud Network (VCN). If you plan to peer this VCN with another VCN, the VCNs must not have overlapping CIDRs.|
-
-> Simple Subnet (visible only when `Customize Network Configuration` is selected)
-
-|          VARIABLE          |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|SUBNET TYPE                 | `Public Subnet` or `Private Subnet`|
-|NAME                        | Subnet Display Name|
-|DNS LABEL                   | Subnet DNS LABEL|
-|CIDR BLOCK                  | The CIDR of the Subnet. Should not overlap with any other subnet CIDRs|
-|NETWORK SECURITY GROUP CONFIGURATION| `Use Recommended Configuration`: Use default configuration defined by the Terraform template. <br> `Customize Network Security Group`: Allow user to customize some basic network security group settings.|
-
-> Network Security Group (visible only when `Customize Network Security Group` is selected)
-
-|          VARIABLE          |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|NAME                        | NSG Display Name|
-|ALLOWED INGRESS TRAFFIC (CIDR BLOCK)| WHITELISTED CIDR BLOCK for ingress traffic|
-|SSH PORT NUMBER             | Default SSH PORT for ingress traffic|
-|HTTP PORT NUMBER            | Default HTTP PORT for ingress traffic|
-|HTTPS PORT NUMBER           | Default HTTPS PORT for ingress traffic|
-
-> Additional Configuration Options
-
-|          VARIABLE          |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|TAG KEY NAME                | Free-form tag key name|
-|TAG VALUE                   | Free-form tag value|
-
-4. Click Next and Review the configuration.
-5. Click Create button to confirm and create your ORM Stack.
-6. On Stack Details page, you can now run `Terraform` commands to manage your infrastructure. You typically start with a plan then run apply to create and make changes to the infrastructure. More details below:
-
-|      TERRAFORM ACTIONS     |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|Plan                        | `terraform plan` is used to create an execution plan. This command is a convenient way to check the execution plan prior to make any changes to the infrastructure resources.|
-|Apply                       | `terraform apply` is used to apply the changes required to reach the desired state of the configuration described by the template.|
-|Destroy                     | `terraform destroy` is used to destroy the Terraform-managed infrastructure.|
-
-## Customize for Marketplace
-
-In case you wanted to make changes to this template to use a Marketplace image rather than a platform image or custom image, you need to make the following changes.
-
-1. Configure Marketplace listing variables on [`variables.tf`](./variables.tf).
-
-|      VARIABLES             |           DESCRIPTION                                                 |
-|----------------------------|-----------------------------------------------------------------------|
-|mp_subscription_enabled     | Enable subscription to Marketplace.|
-|mp_listing_id               | Marketplace App Catalog Listing OCID.|
-|mp_listing_resource_id      | Marketplace Listing Image OCID.|
-|mp_listing_resource_version | Marketplace Listing Package/Resource Version (Reference value)|
-
-2. Modify [`compute.tf`](./compute.tf) set `source_details` to refer to `local.compute_image_id` rather than `platform_image_id`. The `local.compute_image_id` holds the logic to either refer to the marketplace image or a custom image, based on the `mp_subscription_enabled` flag.
-
-```hcl
-resource "oci_core_instance" "simple-vm" {
-  availability_domain = local.availability_domain
-  compartment_id      = var.compute_compartment_ocid
-  display_name        = var.vm_display_name
-  shape               = var.vm_compute_shape
-
-  dynamic "shape_config" {
-    for_each = local.is_flex_shape
-      content {
-        ocpus = shape_config.value
-      }
-  }
-
-
-  create_vnic_details {
-    subnet_id              = local.use_existing_network ? var.subnet_id : oci_core_subnet.simple_subnet[0].id
-    display_name           = var.subnet_display_name
-    assign_public_ip       = local.is_public_subnet
-    hostname_label         = var.hostname_label
-    skip_source_dest_check = false
-    nsg_ids                = [oci_core_network_security_group.simple_nsg.id]
-  }
-
-  source_details {
-    source_type = "image"
-    #use a marketplace image or custom image:
-    source_id   = local.compute_image_id
-  }
-
-```
-2. Modify [`oci_images.tf`](./oci_images.tf) set `marketplace_source_images` map variable to refer to the marketplace images your Stack will launch.
-
-```hcl
-
-variable "marketplace_source_images" {
-  type = map(object({
-    ocid = string
-    is_pricing_associated = bool
-    compatible_shapes = list(string)
-  }))
-  default = {
-    main_mktpl_image = {
-      ocid = "ocid1.image.oc1..<unique_id>"
-      is_pricing_associated = true
-      compatible_shapes = []
-    }
-    #Remove comment and add as many marketplace images that your stack references be replicated to other realms
-    #supporting_image = {
-    #  ocid = "ocid1.image.oc1..<unique_id>"
-    #  is_pricing_associated = false
-    #  compatible_shapes = ["VM.Standard2.2", "VM.Standard.E2.1.Micro"]
-    #}
-  }
-}
-
-```
-
-2. Run your tests using the Terraform CLI or build a new package and deploy on ORM.
+<p float="left">
+  <img align="left" width="130" src="./images/oracle_analytics.png"> 
+  <br/>
+  <h1>Oracle Analytics Server on Oracle Cloud Infrastructure</h1>
+  <br/>
+</p>
+<p><a href="https://docs.oracle.com/en/middleware/bi/analytics-server/index.html">Oracle Analytics Server</a> is a complete modern analytics platform that helps you make smarter predictions and better decisions.  Embedded machine learning and artificial intelligence power intelligent enterprise reporting, ad hoc analysis, and self-service data visualization, so no matter what your role (analyst, engineer, or executive) you can easily analyze data and uncover new insights. </p>
+<p>This Quick Start automates the deployment of Oracle Analytics Server on Oracle Cloud Infrastructure. The Quick Start uses 
+<a href="https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Concepts/resourcemanager.htm">Resource Manager</a>, a service on Oracle Cloud Infrastructure that allows you to deploy resources using Terraform.</p>
+
+<h2>Topology</h2>
+<p>This topology represents a simple Oracle Analytics Server deployment on Oracle Cloud Infrastructure using this Quick Start.</p>
+<p><img src="./images/oas_oc_top.jpg"></p>
+<h2>Prerequisites</h2>
+<p>Before you deploy Oracle Analytics Server on Oracle Cloud, you must complete various prerequisite tasks. Oracle recommends that you gather a list of the metadata that you'll need for the quick-deployment process and we provide a checklist to help you plan your deployment. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-054F8080-A6CB-46D2-9166-03D3D21DC8A7">Before you Begin</a>.</p>
+<h3>Subscribe to Oracle Analytics Server on Oracle Cloud</h3>
+<p>You must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server to subscribe to Oracle Analytics Server - BYOL (Bring Your Own License) and sign up for an Oracle Cloud account. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
+<h3>Set Up Policies in Oracle Cloud Infrastructure</h3>
+<p>In Oracle Cloud Infrastructure, you use policies to control access to resources in your tenancy. Before deploying Oracle Analytics Server on a compartment in Oracle Cloud Infrastructure, your tenant administrator must set up policies that enables you (or other users) to access or create resources in specific compartments. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-92B99C32-314E-4565-AD1B-C19CA68AB52C">Set Up Policies in Oracle Cloud Infrastructure</a>.</p>
+<h3>Create Compartments</h3>
+<p>Before you deploy Oracle Analytics Server on Oracle Cloud, Oracle recommends that you set up the compartment where you want all the resources associated with Oracle Analytics Server to belong. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-16204AC6-9155-4762-8E01-E940CCB5BC10">Create Compartments</a>.</p>
+<h3>Set Up Network Resources</h3>
+<p>You or your network administrator must set up a virtual cloud network (VCN) and a subnet for your Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-7C30CE28-CBB4-429F-B39E-270A777008C8">Set Up Network Resources</a>.</p>
+<h3>Set Up Oracle Cloud Database</h3>
+<p>When you deploy Oracle Analytics Server on Oracle Cloud using this Quick Start, you're asked to provide the database connection string and database administrator credentials for an existing database you want to use. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-C8C5D819-5EB5-4EE2-98EF-F6093E850B0E">Set Up an Oracle Cloud Database</a>.</p>
+<h3>Plan Compute Shape and Boot Volume Size</h3>
+<p>You can deploy Oracle Analytics Server on a range of compute shapes to suit different scenarios. If you're not sure which sizes to use, contact your sales team to discuss sizing guidelines.  See also <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-CCFE432C-C6E4-4FB1-A73C-8155CB32A069">Plan Compute Shape and Boot Volume Size</a>.</p>
+<h3>Generate SSH Keys</h3>
+<p>You must generate the SSH public key and corresponding private key you want to use to access the Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-4F4ED109-8D4F-4A2A-80B4-28E660013AE8">Generate SSH Keys</a>.</p>
+<h3>Complete Predeployment Checklist</h3>
+<p>Use a checklist to plan your deployment and ensure you've completed all the prerequisite tasks. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-F34E9A58-B40B-4FC1-9279-BB13A13BF972">Complete Checklist</a>.</p>
+<h2>Deploy Oracle Analytics Server using Resource Manager</h2>
+<p>Download the Quick Start Terraform scripts from GitHub and then use Resource Manager to deploy Oracle Analytics Server on Oracle Cloud Infrastructure. </p>
+<ol>
+<li> Complete all the prerequisites tasks and record the information you need in the checklist provided. </li>
+<li> On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-5.9.zip</b>). </li>
+
+<li>Extract all the files in <b>oci-oracle-analytics-server-5.9.zip</b> to a folder on your local file system.</li>
+<li>Select the <b>terraform</b> folder and create a ZIP file that includes the <b>terraform</b> folder and all its content. You can use any name for the ZIP file. For example, <i>MyOASTerraform.zip</i>.</li>
+<li> Sign into Oracle Cloud Infrastructure Console and navigate to <b>Developer Service</b>s. Under <b>Resource Manager</b>, click <b>Stacks</b>. </li>
+<li> Select the compartment in which you want to deploy and run the stack. For example,  <i>MyStacks</i>. </li>
+<li> Click <b>Create Stack</b>. </li>
+<li> Enter details about your stack and click Next.
+  <ul>
+      <li> Keep the default <b>My Configuration</b>.</li>
+      <li> For Terraform configuration source, select <b>.Zip file</b> and browse to the ZIP file that you created in Step 4 that contains the <b>terraform</b> folder. 
+The Stack Information section updates to show <b>Oracle Analytics Server - BYOL</b>.</li>
+      <li> For Working Directory, select <b>terraform</b>.</li>
+      <li> Enter a name for your Oracle Analytics Server stack. For example, <i>My-OAS-Terraform-Stack</i>.</li>
+      <li> Add your own description or leave the default. For example, <i>Stack to install Oracle Analytics Server on My TEST compute instance</i>.</li>
+</ul>
+<li>Set values for the compute instance and network on which Oracle Analytics Server will be deployed, and configure domain information for Oracle Analytics Server.
+<p><b>Compute Instance Configuration</b></p>
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Description</th> 
+  </tr>
+  <tr>
+    <td>Display Name</td>
+    <td>Name for the compute instance. For example, <i>MyTestOAS</i>. </td> 
+  </tr>
+  <tr>
+    <td>Target Compartment</td>
+    <td>Compartment in which to deploy the Oracle Analytics Server compute instance that this stack generates. For example, <i>MyOracle_Analytics_Server</i>.</td> 
+  </tr>
+<tr>
+    <td>Availability Domain</td>
+    <td>Domain in which to create the compute instance. Required only if your tenancy has more than one availability domain.</td> 
+  </tr>
+  <tr>
+    <td>Shape </td>
+    <td>Shape for the compute instance. If you select a flexible shape, you can specify the number of OCPUs and the amount of Memory (GB) that you want for the compute instance. </td> 
+  </tr>
+<tr>
+    <td> OCPU</td>
+    <td> Only for flexible shapes. Value between 1 and 64. The default is 1 OCPU.</td> 
+  </tr>
+ <tr>
+    <td> Memory</td>
+    <td> Only for flexible shapes. Value between 1 and 1024 GB. The default is 15 GB.</td> 
+  </tr>
+<tr>
+    <td>Boot Volume Size</td>
+    <td>Size of the boot volume in GB. The minimum volume is 1024 GB and the maximum value is 32768 GB.</td> 
+  </tr>
+  <tr>
+    <td> SSH Public Key</td>
+    <td>Public SSH key that you created to access the compute instance.</td> 
+  </tr>
+</table> 
+<p><b>Network Configuration</b></p>
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Description</th> 
+  </tr>
+  <tr>
+    <td>Compartment</td>
+    <td>Compartment containing the Virtual Cloud Network (VCN) you want to use. For example, <i>MyNetwork</i>.</td> 
+  </tr>
+<tr>
+    <td>Virtual Cloud Network</td>
+    <td>Virtual cloud network (VCN) where you want to create the compute instance.</td> 
+  </tr>
+  <tr>
+    <td>Subnet</td>
+    <td>Subnet for the compute instance.</td> 
+  </tr>
+  <tr>
+    <td>Assign a Public IP Address</td>
+    <td>Generates a public IP address for the compute instance.</td> 
+  </tr>
+</table>
+<p><b>Domain Configuration</b></p>
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Description</th> 
+  </tr>
+  <tr>
+    <td>Create Oracle Analytics Server Domain</td>
+    <td>Select to configure a domain for the Oracle Analytics Server compute instance.
+        <p>Don't select <i>Create Oracle Analytics Server Domain</i>, if you want to create an additional Oracle Analytics Server
+compute instance to scale out an existing Oracle Analytics Server deployment.</p></td> 
+  </tr><tr>
+    <td>Analytics Administrator Username</td>
+    <td>Name of the user who will administer Oracle Analytics Server.
+        <p>Because this is a new user, you can enter any suitable username. For example, <i>myoasadmin</i>.</p></td> 
+  </tr>
+  <tr>
+    <td>Analytics Administrator Password</td>
+    <td>Password for the Oracle Analytics Server administrator. Enter any suitable password. </td> 
+  </tr>
+<tr>
+    <td>Database Connection String</td>
+    <td>Connection string for the database you want to use to store Oracle Analytics Server product schemas.The database must be a pluggable database type (PDB).
+<p>Use the format: <i>hostname_or_IP address:port:PDB_name.DB_domain</i></p> 
+<p>For example: </p> <code>oasdb.sub12345678901.oasvcn.oraclevcn.com:1512:OASDB1213_pdb1.sub12345678901.oasvcn.oraclevcn.com</code>
+</td> 
+  </tr>
+  <tr>
+    <td>Database Administrator Username</td>
+    <td>Name of an existing user with database administration privileges. For example, <i>myoasdba</i>.</td> 
+  </tr>
+<tr>
+    <td>Database Administrator Password</td>
+    <td>Password of the user with database administration privileges. Enter any suitable password.</td> 
+  </tr>
+  <tr>
+    <td>Database Schema Prefix</td>
+    <td>Prefix added to the name of each database schema created for Oracle Analytics Server. 
+     <p>For example, <i>MyOAS</i>.</p></td> 
+  </tr>
+<tr>
+    <td>Database Schema Password</td>
+    <td>Password to access the database schemas used by Oracle Analytics Server. Because this is a new password, you can enter any suitable value.</td> 
+ </tr>
+</table>
+</li>
+<li>Click <b>Next</b>, and review the configuration.</li>
+<li>Select <b>Run Apply</b>, and click <b>Create</b>.
+  <p> Monitor progress on the Job Details page. When the stack job finishes, the state changes from <b>In Progress</b> to <b>Succeeded</b>. After the stack job finishes, it takes another 40 minutes to deploy Oracle Analytics Server. </p></li>
+<li>To track the deployment process, use SSH to access the compute instance and monitor the deployment logs in the <code>/tmp</code> directory  (<code>oas_install.log</code> and <code>create_domain.log</code>). When Oracle Analytics Server is ready to use, you see the file <code>/tmp/oas_install.finish</code>.</li>
+</ol>
+
+<h2>Deploy Oracle Analytics Server Using Terraform</h2>
+<p>Download the Quick Start Terraform scripts from GitHub, modify two configuration files (<code>provider.tf</code> and <code>variable.tf</code>), and then run the <code>terraform</code> <code>init,</code> <code>plan</code> and <code>apply</code> commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure.</p>
+<ol>
+<li>Complete all the prerequisites tasks and record the information you need in the checklist provided.</li>
+<li>On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-5.9.zip</b>).</li>
+<li>Extract all the files in <b>oci-oracle-analytics-server-5.9.zip</b> to a folder on your local file system.</li>
+<li>Install Terraform version 0.12.x. For example, you can run the following command on Mac with Homebrew:
+   <p><code>brew install terraform@0.12</code></p></li>
+<li>Sign into Oracle Cloud Infrastructure Console and collect your user, tenancy, and signing key details. See <a href="https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm#To_get_a_config_file_snippet_API_signing_key" rel="nofollow">How to get the config file snippet for an API signing key</a>.</li>
+<li>Open the file <code>provider.tf</code> for editing and enter the user and tenancy information you gathered from Oracle Cloud Infrastructure Console in this format:
+  <p><code>provider "oci" {</code></p>
+  <p><code>region = "us-ashburn-1"</code></p>
+  <p><code>tenancy_ocid = "ocid1.tenancy.oc1..unique_ID"</code></p>
+  <p><code>fingerprint = "12:34:56:78:90:ab:cd:ef:12:34:56:78:90:ab:cd:ef"</code></p>
+  <p><code>user_ocid = "ocid1.user.oc1..unique_ID"</code></p>
+  <p><code>private_key_path = "~/.oci/oci_api_key.pem"</code></p>
+  <p><code>disable_auto_retries = "true"</code></p>
+<p><code>}</code></p>
+<p>For <code>private_key_path</code>, provide the location of the PEM file you uploaded to the Oracle Cloud Infrastructure Console for API Keys. See <a href="https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm#two" rel="nofollow">How to Generate an API Signing Key</a>.</p></li>
+<li>In the same folder as <code>provider.tf</code>, open the file <code>variable.tf</code> for editing. Enter the information required to create the compute instance and configure the domain for Oracle Analytics Server.</li>
+<li>After saving both configuration files, run the following commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure:
+ <ul>
+  <li><code>terraform init</code></li>
+  <li><code>terraform plan</code></li>
+  <li><code>terraform apply</code></li>
+ </ul></li>
+</ol>
+
+<h2>Post-Deployment Tasks</h2>
+<p>Refer to the documentation for a list of post-deployment tasks. See <a href="https://docs.us.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-4DA72FBE-C456-49B7-8424-56DE890CD886">Complete Post Deployment Tasks</a>. </p>
+
+<h2>Using OCI Resource Manager</h2>
+<p>Oracle Cloud Infrastructure Resource Manager (ORM) allows you to manage your Terraform configurations and state. You might need to update your policies to access the ORM service. </p>
+<p><code>allow group mygroup_name to read compartments in tenancy</code></p>
+<p><code>allow group mygroup_name to manage instance-family in compartment mycompartment_name</code></p>
+<p><code>allow group mygroup_name to use virtual-network-family in compartment mycompartment_name</code></p>
+<p><code>allow group mygroup_name to manage orm-family in compartment mycompartment_name</code></p>
+
+<h2>License</h2>
+<p>These Terraform scripts are licensed under the Universal Permissive License 1.0. See LICENSE for more details. </p>
+<p>When you deploy Oracle Analytics Server using BYOL, Oracle Analytics Server is governed by the following Licensing terms: https://cloudmarketplace.oracle.com/marketplace/content?contentId=18088784&render=inline</p>
+<p>BYOL requires an Oracle Fusion Middleware on-premise license for Oracle Analytics Server, and an active support contract. </p>
+<h2>Questions</h2>
+<p>If you have an issue or a question, review our <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/frequently-asked-questions.html">FAQs</a> page. </p>
