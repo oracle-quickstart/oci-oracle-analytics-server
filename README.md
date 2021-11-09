@@ -33,9 +33,9 @@
 <p>Download the Quick Start Terraform scripts from GitHub and then use Resource Manager to deploy Oracle Analytics Server on Oracle Cloud Infrastructure. </p>
 <ol>
 <li> Complete all the prerequisites tasks and record the information you need in the checklist provided. </li>
-<li> On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-5.9.zip</b>). </li>
+<li> On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-master.zip</b>). </li>
 
-<li>Extract all the files in <b>oci-oracle-analytics-server-5.9.zip</b> to a folder on your local file system.</li>
+<li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
 <li>Select the <b>terraform</b> folder and create a ZIP file that includes the <b>terraform</b> folder and all its content. You can use any name for the ZIP file. For example, <i>MyOASTerraform.zip</i>.</li>
 <li> Sign into Oracle Cloud Infrastructure Console and navigate to <b>Developer Service</b>s. Under <b>Resource Manager</b>, click <b>Stacks</b>. </li>
 <li> Select the compartment in which you want to deploy and run the stack. For example,  <i>MyStacks</i>. </li>
@@ -168,12 +168,12 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p>Download the Quick Start Terraform scripts from GitHub, modify two configuration files (<code>provider.tf</code> and <code>variable.tf</code>), and then run the <code>terraform</code> <code>init,</code> <code>plan</code> and <code>apply</code> commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure.</p>
 <ol>
 <li>Complete all the prerequisites tasks and record the information you need in the checklist provided.</li>
-<li>On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-5.9.zip</b>).</li>
-<li>Extract all the files in <b>oci-oracle-analytics-server-5.9.zip</b> to a folder on your local file system.</li>
+<li>On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-master.zip</b>).</li>
+<li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
 <li>Install Terraform version 0.12.x. For example, you can run the following command on Mac with Homebrew:
    <p><code>brew install terraform@0.12</code></p></li>
 <li>Sign into Oracle Cloud Infrastructure Console and collect your user, tenancy, and signing key details. See <a href="https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm#To_get_a_config_file_snippet_API_signing_key" rel="nofollow">How to get the config file snippet for an API signing key</a>.</li>
-<li>Open the file <code>provider.tf</code> for editing and enter the user and tenancy information you gathered from Oracle Cloud Infrastructure Console in this format:
+<li>Open the file <code>provider.tf</code> for editing, and enter the user and tenancy information you gathered from Oracle Cloud Infrastructure Console in this format:
   <p><code>provider "oci" {</code></p>
   <p><code>region = "us-ashburn-1"</code></p>
   <p><code>tenancy_ocid = "ocid1.tenancy.oc1..unique_ID"</code></p>
@@ -182,8 +182,13 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
   <p><code>private_key_path = "~/.oci/oci_api_key.pem"</code></p>
   <p><code>disable_auto_retries = "true"</code></p>
 <p><code>}</code></p>
-<p>For <code>private_key_path</code>, provide the location of the PEM file you uploaded to the Oracle Cloud Infrastructure Console for API Keys. See <a href="https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm#two" rel="nofollow">How to Generate an API Signing Key</a>.</p></li>
-<li>In the same folder as <code>provider.tf</code>, open the file <code>variable.tf</code> for editing. Enter the information required to create the compute instance and configure the domain for Oracle Analytics Server.</li>
+<p>For <code>private_key_path</code>, provide the location of the PEM file you uploaded to the Oracle Cloud Infrastructure Console for API signing keys. See <a href="https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm#two" rel="nofollow">How to Generate an API Signing Key</a>.</p></li>
+<li>In the same folder as <code>provider.tf</code>, open the file <code>variable.tf</code> for editing. Enter the information required to create the compute instance, and optionally, configure the domain for Oracle Analytics Server.
+<p><b>Note:</b> Don't edit the following variables.</p>
+<ul><li><code>mp_OAS_listing_id=</code></li>
+<li><code>mp_OAS_listing_resource_version=</code></li>
+<li><code>mp_OAS_listing_image_resource_id=</code></li>
+</ul></li>
 <li>After saving both configuration files, run the following commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure:
  <ul>
   <li><code>terraform init</code></li>
