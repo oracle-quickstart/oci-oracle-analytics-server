@@ -14,7 +14,7 @@
 <h2>Prerequisites</h2>
 <p>Before you deploy Oracle Analytics Server on Oracle Cloud, you must complete various prerequisite tasks. Oracle recommends that you gather a list of the metadata that you'll need for the quick-deployment process and we provide a checklist to help you plan your deployment. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-054F8080-A6CB-46D2-9166-03D3D21DC8A7">Before you Begin</a>.</p>
 <h3>Subscribe to Oracle Analytics Server on Oracle Cloud</h3>
-<p>You must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server to subscribe to Oracle Analytics Server - BYOL (Bring Your Own License) and sign up for an Oracle Cloud account. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
+<p>You must have an active Oracle Cloud account (Pay As You Go or Annual Universal Credits) to deploy <i>Oracle Analytics Server - UCM</i> (Universal Credits) on Oracle Cloud Infrastructure. Alternatively, you must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server and sign up for an Oracle Cloud account to deploy <i>Oracle Analytics Server - BYOL<i> (Bring Your Own License). See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
 <h3>Set Up Policies in Oracle Cloud Infrastructure</h3>
 <p>In Oracle Cloud Infrastructure, you use policies to control access to resources in your tenancy. Before deploying Oracle Analytics Server on a compartment in Oracle Cloud Infrastructure, your tenant administrator must set up policies that enables you (or other users) to access or create resources in specific compartments. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-92B99C32-314E-4565-AD1B-C19CA68AB52C">Set Up Policies in Oracle Cloud Infrastructure</a>.</p>
 <h3>Create Compartments</h3>
@@ -36,16 +36,16 @@
 <li> On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-master.zip</b>). </li>
 
 <li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
-<li>Select the <b>terraform</b> folder and create a ZIP file that includes the <b>terraform</b> folder and all its content. You can use any name for the ZIP file. For example, <i>MyOASTerraform.zip</i>.</li>
+<li>Make sure <b>build.sh</b> is executable (if build.sh isn't executable, run <code>chmod 755 build.sh</code>), and then run <code>build.sh</code> to generate two zip files (one for the BYOL license and other for the UCM license) in the build folder.</li>
 <li> Sign into Oracle Cloud Infrastructure Console and navigate to <b>Developer Service</b>s. Under <b>Resource Manager</b>, click <b>Stacks</b>. </li>
 <li> Select the compartment in which you want to deploy and run the stack. For example,  <i>MyStacks</i>. </li>
 <li> Click <b>Create Stack</b>. </li>
 <li> Enter details about your stack and click Next.
   <ul>
       <li> Keep the default <b>My Configuration</b>.</li>
-      <li> For Terraform configuration source, select <b>.Zip file</b> and browse to the ZIP file that you created in Step 4 that contains the <b>terraform</b> folder. 
-The Stack Information section updates to show <b>Oracle Analytics Server - BYOL</b>.</li>
-      <li> For Working Directory, select <b>terraform</b>.</li>
+      <li> For Terraform configuration source, select <b>.Zip file</b> and browse to the ZIP file that you created in Step 4. 
+The Stack Information section updates to show <b>Oracle Analytics Server - UCM</b> or <b>Oracle Analytics Server - BYOL</b>.</li>
+      <li> For Working Directory, select <b>Use Terraform configuration files in the root folder</b>.</li>
       <li> Enter a name for your Oracle Analytics Server stack. For example, <i>My-OAS-Terraform-Stack</i>.</li>
       <li> Add your own description or leave the default. For example, <i>Stack to install Oracle Analytics Server on My TEST compute instance</i>.</li>
 </ul>
@@ -168,11 +168,15 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p>Download the Quick Start Terraform scripts from GitHub, modify two configuration files (<code>provider.tf</code> and <code>variable.tf</code>), and then run the <code>terraform</code> <code>init,</code> <code>plan</code> and <code>apply</code> commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure.</p>
 <ol>
 <li>Complete all the prerequisites tasks and record the information you need in the checklist provided.</li>
-<li>On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-master.zip</b>).</li>
-<li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
 <li>Install Terraform version 0.12.x. For example, you can run the following command on Mac with Homebrew:
    <p><code>brew install terraform@0.12</code></p></li>
 <li>Sign into Oracle Cloud Infrastructure Console and collect your user, tenancy, and signing key details. See <a href="https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm#To_get_a_config_file_snippet_API_signing_key" rel="nofollow">How to get the config file snippet for an API signing key</a>.</li>
+<li>Obtain the code from GitHub either by cloning the repository or by performing the following steps:
+<ol>
+<li>On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-master.zip</b>).</li>
+<li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
+</ol>
+</li>
 <li>Open the file <code>provider.tf</code> for editing, and enter the user and tenancy information you gathered from Oracle Cloud Infrastructure Console in this format:
   <p><code>provider "oci" {</code></p>
   <p><code>region = "us-ashburn-1"</code></p>
@@ -189,6 +193,26 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <li><code>mp_OAS_listing_resource_version=</code></li>
 <li><code>mp_OAS_listing_image_resource_id=</code></li>
 </ul></li>
+<li>The default setting is for the BYOL license. To use the UCM license, copy the content of the following three UCM config files (file names ending with .ucm) to the corresponding BYOL config files. For example, copy the content of the <code>oci_images.tf.ucm</code> file to the <code>oci_images.tf</code> file.
+<table>
+  <tr>
+    <th>BYOL Config Files</th>
+    <th>UCM Config Files</th> 
+  </tr>
+  <tr>
+    <td><code>oci_images.tf</code></td>
+    <td><code>oci_images.tf.ucm</code></td> 
+  </tr>
+<tr>
+    <td><code>schema.yaml</code></td>
+    <td><code>schema.yaml.ucm</code></td> 
+  </tr>
+  <tr>
+    <td><code>terraform.tfvars</code></td>
+    <td><code>terraform.tfvars.ucm</code></td> 
+  </tr>  
+</table>
+</li>
 <li>After saving both configuration files, run the following commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure:
  <ul>
   <li><code>terraform init</code></li>
@@ -208,8 +232,12 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p><code>allow group mygroup_name to manage orm-family in compartment mycompartment_name</code></p>
 
 <h2>License</h2>
-<p>These Terraform scripts are licensed under the Universal Permissive License 1.0. See LICENSE for more details. </p>
-<p>When you deploy Oracle Analytics Server using BYOL, Oracle Analytics Server is governed by the following Licensing terms: https://cloudmarketplace.oracle.com/marketplace/content?contentId=18088784&render=inline</p>
-<p>BYOL requires an Oracle Fusion Middleware on-premise license for Oracle Analytics Server, and an active support contract. </p>
+<p>These Terraform scripts are licensed under the Universal Permissive License 1.0. See <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/LICENSE">LICENSE</a> for more details.</p>
+<p>There are two licensing options available:</p>
+<h3>Universal Credits Model (UCM)</h3>
+<p>When you deploy Oracle Analytics Server using UCM, the Oracle Analytics Server license is governed by the following Licensing terms: https://cloudmarketplace.oracle.com/marketplace/content?contentId=70514770&render=inline</p>
+<h3>Bring Your Own License (BYOL)</h3>
+<p>When you deploy Oracle Analytics Server using BYOL, the Oracle Analytics Server license is governed by the following Licensing terms: https://cloudmarketplace.oracle.com/marketplace/content?contentId=18088784&render=inline</p>
+<p>BYOL requires an Oracle Fusion Middleware on-premise license for Oracle Analytics Server, and an active support contract.</p>
 <h2>Questions</h2>
 <p>If you have an issue or a question, review our <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/frequently-asked-questions.html">FAQs</a> page. </p>
