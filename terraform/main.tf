@@ -37,3 +37,6 @@ output "instance_public_ip" {
 output "instance_private_ip" {
   value = module.computeinstance.vm_private_ip
 }
+output "messages" {
+  value = var.create_domain ? "\n*********************\nOracle Analytics Server has been provisioned. Domain creation and configuration is continuing in the background and will take approximately 30 minutes to complete after this stack job finishes.\n*********************\n" : "\n*********************\nOracle Analytics Server has been provisioned. At your request, no domain was created or configured. You must take the additional steps to configure the domain.\n*********************\n"
+}

@@ -111,13 +111,8 @@ variables:
     visible: false
   
   mp_OAS_listing_image_resource_id:
-    title: Image OCID
-    description: The Oracle Analytics Server image that will be used to create the compute instance.
     type: string
-    pattern: "^ocid1\\.image\\.[a-zA-Z0-9\\.\\-\\_]+$"
-    default: ocid1.image.oc1..aaaaaaaaajrayvcywmncu6qfsfqjyrdhing4vs3crcfzr4rlu63vqu66tl4q
-    display: false
-    required: true
+    visible: false
 
   availability_domain:
     title: Availability Domain
@@ -129,10 +124,10 @@ variables:
 
   boot_volume_size:
     title: Boot Volume Size
-    description: The boot volume size in GB. The minimum volume is 1024 GB and the maximum is 32768 GB.
+    description: The boot volume size in GB. The minimum volume is 400 GB and the maximum is 32768 GB.
     type: integer
-    default: 1024
-    minimum: 1024
+    default: 400
+    minimum: 400
     maximum: 32768 
     multipleOf: 1
     required: true
@@ -222,7 +217,7 @@ variables:
 # Domain creation
   create_domain :
     title: Create Oracle Analytics Server Domain
-    description: Provide if Oracle Analytics Server Domain should be created after installation
+    description: Select to create and configure an Oracle Analytics Server domain after installation. Domain creation takes about 30 minutes to complete after this stack job finishes.
     type: boolean
     default: false
 
@@ -242,7 +237,7 @@ variables:
 
   connect_string:
     title: Database Connection String
-    description: Provide a database connection string in following format '<hostname|IP address>:<PORT>:<DB_unique_name>.<DB_domain>'
+    description: Provide a connection string for the database in the format '<hostname or IP address>:<port>:<PDB_name>.<DB_domain>'. The database must be an Oracle Cloud virtual machine DB system.   
     type: string
     required: true
     visible: ${create_domain}

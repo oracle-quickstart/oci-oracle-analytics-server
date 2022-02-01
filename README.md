@@ -14,7 +14,7 @@
 <h2>Prerequisites</h2>
 <p>Before you deploy Oracle Analytics Server on Oracle Cloud, you must complete various prerequisite tasks. Oracle recommends that you gather a list of the metadata that you'll need for the quick-deployment process and we provide a checklist to help you plan your deployment. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-054F8080-A6CB-46D2-9166-03D3D21DC8A7">Before you Begin</a>.</p>
 <h3>Subscribe to Oracle Analytics Server on Oracle Cloud</h3>
-<p>You must have an active Oracle Cloud account (Pay As You Go or Annual Universal Credits) to deploy <i>Oracle Analytics Server - UCM</i> (Universal Credits) on Oracle Cloud Infrastructure. Alternatively, you must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server and sign up for an Oracle Cloud account to deploy <i>Oracle Analytics Server - BYOL<i> (Bring Your Own License). See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
+<p>You must have an active Oracle Cloud account (Pay As You Go or Annual Universal Credits) to deploy <i>Oracle Analytics Server - UCM</i> (Universal Credits) on Oracle Cloud Infrastructure. Alternatively, you must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server and sign up for an Oracle Cloud account to deploy <i>Oracle Analytics Server - BYOL</i> (Bring Your Own License). See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
 <h3>Set Up Policies in Oracle Cloud Infrastructure</h3>
 <p>In Oracle Cloud Infrastructure, you use policies to control access to resources in your tenancy. Before deploying Oracle Analytics Server on a compartment in Oracle Cloud Infrastructure, your tenant administrator must set up policies that enables you (or other users) to access or create resources in specific compartments. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-92B99C32-314E-4565-AD1B-C19CA68AB52C">Set Up Policies in Oracle Cloud Infrastructure</a>.</p>
 <h3>Create Compartments</h3>
@@ -36,7 +36,7 @@
 <li> On the Oracle Analytics Server quick-start page, click the <b>Code</b> button, select <b>Download ZIP</b>, and save the ZIP file to your local file system (<b>oci-oracle-analytics-server-master.zip</b>). </li>
 
 <li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
-<li>Make sure <b>build.sh</b> is executable (if build.sh isn't executable, run <code>chmod 755 build.sh</code>), and then run <code>build.sh</code> to generate two zip files (one for the BYOL license and other for the UCM license) in the build folder.</li>
+<li>Make sure <b>build.sh</b> is executable, and then run <code>build.sh</code> to generate two ZIP files in the build folder. One ZIP file is for the BYOL license and the other for the UCM license. If <b>build.sh</b> isn't executable, run <code>chmod 755 build.sh</code>. This enables you to execute the file.</li>
 <li> Sign into Oracle Cloud Infrastructure Console and navigate to <b>Developer Service</b>s. Under <b>Resource Manager</b>, click <b>Stacks</b>. </li>
 <li> Select the compartment in which you want to deploy and run the stack. For example,  <i>MyStacks</i>. </li>
 <li> Click <b>Create Stack</b>. </li>
@@ -82,7 +82,7 @@ The Stack Information section updates to show <b>Oracle Analytics Server - UCM</
   </tr>
 <tr>
     <td>Boot Volume Size</td>
-    <td>Size of the boot volume in GB. The minimum volume is 1024 GB and the maximum value is 32768 GB.</td> 
+    <td>Size of the boot volume in GB. The minimum volume is 400 GB and the maximum value is 32768 GB.</td> 
   </tr>
   <tr>
     <td> SSH Public Key</td>
@@ -120,7 +120,7 @@ The Stack Information section updates to show <b>Oracle Analytics Server - UCM</
   </tr>
   <tr>
     <td>Create Oracle Analytics Server Domain</td>
-    <td>Select to configure a domain for the Oracle Analytics Server compute instance.
+    <td>Select to configure a domain for the Oracle Analytics Server compute instance. Domain creation takes about 30 - 40 minutes to complete <i>after</i> the stack job finishes.
         <p>Don't select <i>Create Oracle Analytics Server Domain</i>, if you want to create an additional Oracle Analytics Server
 compute instance to scale out an existing Oracle Analytics Server deployment.</p></td> 
   </tr><tr>
@@ -134,7 +134,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
   </tr>
 <tr>
     <td>Database Connection String</td>
-    <td>Connection string for the database you want to use to store Oracle Analytics Server product schemas.The database must be a pluggable database type (PDB).
+    <td>Connection string for the database you want to use to store Oracle Analytics Server product schemas. The database must be a pluggable database (PDB) on an Oracle Cloud virtual machine DB system.
 <p>Use the format: <i>hostname_or_IP address:port:PDB_name.DB_domain</i></p> 
 <p>For example: </p> <code>oasdb.sub12345678901.oasvcn.oraclevcn.com:1512:OASDB1213_pdb1.sub12345678901.oasvcn.oraclevcn.com</code>
 </td> 
@@ -160,7 +160,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 </li>
 <li>Click <b>Next</b>, and review the configuration.</li>
 <li>Select <b>Run Apply</b>, and click <b>Create</b>.
-  <p> Monitor progress on the Job Details page. When the stack job finishes, the state changes from <b>In Progress</b> to <b>Succeeded</b>. After the stack job finishes, it takes another 40 minutes to deploy Oracle Analytics Server. </p></li>
+  <p> Monitor progress on the Job Details page. When the stack job finishes, the state changes from <b>In Progress</b> to <b>Succeeded</b>. If you opted to create and configure a domain for Oracle Analytics Server, it takes another 30-40 minutes <i>after</i> the stack job finishes to create the domain and deploy Oracle Analytics Server. </p></li>
 <li>To track the deployment process, use SSH to access the compute instance and monitor the deployment logs in the <code>/tmp</code> directory  (<code>oas_install.log</code> and <code>create_domain.log</code>). When Oracle Analytics Server is ready to use, you see the file <code>/tmp/oas_install.finish</code>.</li>
 </ol>
 
@@ -177,7 +177,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <li>Extract all the files in <b>oci-oracle-analytics-server-master.zip</b> to a folder on your local file system.</li>
 </ol>
 </li>
-<li>Open the file <code>provider.tf</code> for editing, and enter the user and tenancy information you gathered from Oracle Cloud Infrastructure Console in this format:
+<li>Open the file <code>provider.tf</code> in a text editor and enter the user and tenancy information you gathered from Oracle Cloud Infrastructure Console in this format:
   <p><code>provider "oci" {</code></p>
   <p><code>region = "us-ashburn-1"</code></p>
   <p><code>tenancy_ocid = "ocid1.tenancy.oc1..unique_ID"</code></p>
@@ -187,17 +187,17 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
   <p><code>disable_auto_retries = "true"</code></p>
 <p><code>}</code></p>
 <p>For <code>private_key_path</code>, provide the location of the PEM file you uploaded to the Oracle Cloud Infrastructure Console for API signing keys. See <a href="https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm#two" rel="nofollow">How to Generate an API Signing Key</a>.</p></li>
-<li>In the same folder as <code>provider.tf</code>, open the file <code>variable.tf</code> for editing. Enter the information required to create the compute instance, and optionally, configure the domain for Oracle Analytics Server.
+<li>In the same folder as <code>provider.tf</code>, open the file <code>variable.tf</code> in a text editor. Enter the information required to create the compute instance, and optionally, configure the domain for Oracle Analytics Server.
 <p><b>Note:</b> Don't edit the following variables.</p>
 <ul><li><code>mp_OAS_listing_id=</code></li>
 <li><code>mp_OAS_listing_resource_version=</code></li>
 <li><code>mp_OAS_listing_image_resource_id=</code></li>
 </ul></li>
-<li>The default setting is for the BYOL license. To use the UCM license, copy the content of the following three UCM config files (file names ending with .ucm) to the corresponding BYOL config files. For example, copy the content of the <code>oci_images.tf.ucm</code> file to the <code>oci_images.tf</code> file.
+<li>The default setting is for the BYOL license. To use the UCM license, copy the content of the following three UCM configuration files (file names ending with .ucm) to the corresponding BYOL configuration files. For example, copy the content of the <code>oci_images.tf.ucm</code> file to the <code>oci_images.tf</code> file.
 <table>
   <tr>
-    <th>BYOL Config Files</th>
-    <th>UCM Config Files</th> 
+    <th>BYOL Configuration Files</th>
+    <th>UCM Configuration Files</th> 
   </tr>
   <tr>
     <td><code>oci_images.tf</code></td>
