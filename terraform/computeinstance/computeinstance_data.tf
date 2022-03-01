@@ -18,6 +18,10 @@ data "template_file" "installerscript_template" {
   template = var.create_domain ? file("${path.module}/templates/generate_installerscript.sh") : file("${path.module}/templates/generate_skipinstallerscript.sh")
 }
 
+data "template_file" "biconfigcleaner_template" {
+  template = file("${path.module}/templates/generate_biconfigcleaner.sh")
+}
+
 data "template_file" "cloud_init_file" {
   template = file("${path.module}/cloud_init/cloudinit.template.yaml")
 
@@ -34,6 +38,7 @@ data "template_file" "cloud_init_file" {
     generate_firewallportsscript_content= base64gzip(join(",\n", data.template_file.firewallportsscript_template.*.rendered))
     generate_createdomainscript_content= base64gzip(join(",\n", data.template_file.createdomainscript_template.*.rendered))
     generate_installerscript_content= base64gzip(join(",\n", data.template_file.installerscript_template.*.rendered))
+    generate_biconfigcleaner_content= base64gzip(join(",\n", data.template_file.biconfigcleaner_template.*.rendered))
     create_domain = var.create_domain
   }
 }

@@ -5,6 +5,7 @@ cat << EOF > /tmp/oas_installer.sh
   sudo bash /tmp/open_oas_firewall_ports.sh
   echo "execute domain creation"
   bash /tmp/create_oas_domain.sh
+  bash /tmp/biconfigcleaner.sh 
 EOF
 
 if [[ $? -ne 0 ]]; then

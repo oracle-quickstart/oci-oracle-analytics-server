@@ -36,6 +36,12 @@ write_files:
     content: |
       ${generate_installerscript_content}
 
+  - path: /tmp/generate_biconfigcleaner.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${generate_biconfigcleaner_content}
+
 runcmd:
   - echo "generating biconfig response file"
   - bash /tmp/generate_biconfig.sh ${admin_user_name} ${admin_password} ${connect_string} ${new_db_admin_username} ${new_db_password} ${oas_rcu_schema_prefix} ${oas_rcu_schema_password}
@@ -49,11 +55,14 @@ runcmd:
   - echo "generating oas installer script"
   - bash /tmp/generate_installerscript.sh
   - sudo chmod 0755 /tmp/oas_installer.sh
+  - bash /tmp/generate_biconfigcleaner.sh
+  - sudo chmod 0755 /tmp/generate_biconfigcleaner.sh
   - echo "delete generator files"
   - sudo rm /tmp/generate_biconfig.sh
   - sudo rm /tmp/generate_createdomainscript.sh
   - sudo rm /tmp/generate_oasfirewallportsconfig.sh
   - sudo rm /tmp/generate_openfirewallportsscript.sh
   - sudo rm /tmp/generate_installerscript.sh
+  - sudo rm /tmp/generate_biconfigcleaner.sh
   - bash /tmp/oas_installer.sh
   - touch /tmp/oas_install.finish
