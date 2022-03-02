@@ -12,7 +12,7 @@ base image - Oracle-Linux-7.9-2022.01.24-0
 JDK - jdk-8u321-linux-x64.tar.gz  
 OAS - oa_platform-6.4.0.0.0-20220222231819.715-linux64.jar  
 FMW - fmw_12.2.1.4.0_infrastructure_generic.jar  
-FMW Patches - [FMW Patches](https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=217745106624732&id=2817011.1&_afrWindowMode=0&_adf.ctrl-state=unlctwwr9_4#babdieag1)  
+FMW Patches - [FMW Patches](https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=311482844913210&id=2817011.1&_afrWindowMode=0&_adf.ctrl-state=unsg8pr8x_83#OFMW12214)  
 OWSM - [OWSM Patch](https://support.oracle.com/epmos/faces/PatchDetail?_afrLoop=314980170377433&patchId=33618954&_afrWindowMode=0&_adf.ctrl-state=11gd36v576_638)  
 
 [OAS 5.9.0.0.210915] 
