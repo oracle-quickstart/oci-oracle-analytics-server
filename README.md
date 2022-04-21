@@ -161,7 +161,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <li>Click <b>Next</b>, and review the configuration.</li>
 <li>Select <b>Run Apply</b>, and click <b>Create</b>.
   <p> Monitor progress on the Job Details page. When the stack job finishes, the state changes from <b>In Progress</b> to <b>Succeeded</b>. If you opted to create and configure a domain for Oracle Analytics Server, it takes another 30-40 minutes <i>after</i> the stack job finishes to create the domain and deploy Oracle Analytics Server. </p></li>
-<li>To track the deployment process, use SSH to access the compute instance and monitor the deployment logs in the <code>/tmp</code> directory  (<code>oas_install.log</code> and <code>create_domain.log</code>). When Oracle Analytics Server is ready to use, you see the file <code>/tmp/oas_install.finish</code>.</li>
+<li>To track the deployment process, use SSH to access the compute instance and monitor the deployment logs in the <code>/var/log</code> directory  (<code>oas_cloudinit.log</code> and <code>oas_create_domain.log</code>). When Oracle Analytics Server is ready to use, you see the file <code>/u01/app/oas-scripts/oas_install.finish</code>.</li>
 </ol>
 
 <h2>Deploy Oracle Analytics Server Using Terraform</h2>

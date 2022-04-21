@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+    <short>OAS</short>
+    <description>Oracle Analytics Server</description>
+    <port protocol="tcp" port="9500"/>
+    <port protocol="tcp" port="9501"/>
+    <port protocol="tcp" port="9502"/>
+    <port protocol="tcp" port="9503"/> 
+    <port protocol="tcp" port="9508"/> 
+    <port protocol="tcp" port="9514"/> 
+    <port protocol="tcp" port="9511"/>
+</service>

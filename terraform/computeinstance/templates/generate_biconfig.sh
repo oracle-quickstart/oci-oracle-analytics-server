@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-cat << EOF > /oas/oas_install/biconfig.rsp
+
+cat << EOF > /u01/data/biconfig.rsp
 [ENGINE]
 Response File Version=1.0.0.0.0
 [GENERIC]
@@ -13,7 +14,7 @@ CONFIGURE_ESSBASE=false
 INSTALL_EXALYTICS_IN_MEMORY_SOFTWARE=false
 SERVICE_INSTANCE_MODE=SINGLE
 DOMAIN_NAME=bi
-DOMAINS_DIR=/oas/oas_install/Oracle/Middleware/Oracle_Home/user_projects/domains
+DOMAINS_DIR=/u01/data/domains
 ADMIN_USER_NAME=$1
 ADMIN_PASSWORD=$2
 ADMIN_CONFIRM_PASSWORD=$2

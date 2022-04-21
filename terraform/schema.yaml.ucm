@@ -220,6 +220,25 @@ variables:
     description: Select to create and configure an Oracle Analytics Server domain after installation. Domain creation takes about 30 minutes to complete after this stack job finishes.
     type: boolean
     default: false
+    visible:
+     and:
+      - not:
+        - or:
+          - eq:
+            - ${region}
+            - "us-luke-1"
+          - eq:
+            - ${region}
+            - "us-langley-1"
+          - eq:
+            - ${region}
+            - "us-gov-ashburn-1"
+          - eq:
+            - ${region}
+            - "us-gov-phoenix-1"
+          - eq:
+            - ${region}
+            - "us-gov-chicago-1"
 
   admin_user_name:
     title: Analytics Administrator Username

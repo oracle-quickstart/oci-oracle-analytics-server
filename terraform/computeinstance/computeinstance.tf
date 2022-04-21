@@ -32,7 +32,7 @@ resource "oci_core_instance" "OAS_MP_instance" {
 
   metadata = {
     ssh_authorized_keys = var.ssh_authorized_keys
-    user_data           = join(",\n", data.template_cloudinit_config.biconfig.*.rendered)
+    user_data           = data.template_cloudinit_config.oas_cloud_init.rendered
   }
 
   preserve_boot_volume = false

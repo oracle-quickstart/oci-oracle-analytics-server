@@ -1,68 +1,70 @@
 
-output: {all: '| tee -a /tmp/oas_install.log'}
+output: {all: '| tee -a /var/log/oas_cloudinit.log'}
 
 logcfg: |
   [formatters]
   format=%(levelname)s %(asctime)s: %(message)s
   
 write_files:
-  - path: /tmp/generate_biconfig.sh
+  - path: /tmp/oas-scripts/generate_biconfig.sh
     permissions: '0755'
     encoding: 'gzip+base64'
     content: |
       ${generate_biconfig_content}
-        
-  - path: /tmp/generate_createdomainscript.sh
-    permissions: '0755'
-    encoding: 'gzip+base64'
-    content: |
-      ${generate_createdomainscript_content}
 
-  - path: /tmp/generate_oasfirewallportsconfig.sh
+  - path: /tmp/oas-scripts/create_oas_domain.sh
     permissions: '0755'
     encoding: 'gzip+base64'
     content: |
-      ${generate_firewallportsconfig_content}
+      ${createdomainscript_content}
 
-  - path: /tmp/generate_openfirewallportsscript.sh
+  - path: /tmp/oas-scripts/DefaultSingleNodeOASFirewallPorts.xml
     permissions: '0755'
     encoding: 'gzip+base64'
     content: |
-      ${generate_firewallportsscript_content}
+      ${firewallportsconfig_content}
+
+  - path: /tmp/oas-scripts/open_oas_firewall_ports.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${firewallportsscript_content}
      
-  - path: /tmp/generate_installerscript.sh
+  - path: /tmp/oas-scripts/oas_installer.sh
     permissions: '0755'
     encoding: 'gzip+base64'
     content: |
-      ${generate_installerscript_content}
+      ${installerscript_content}
 
-  - path: /tmp/generate_biconfigcleaner.sh
+  - path: /tmp/oas-scripts/biconfigcleaner.sh
+    permissions: '0755'    
+    encoding: 'gzip+base64'
+    content: |
+      ${biconfigcleaner_content}
+
+  - path: /tmp/oas-scripts/createDataPartition.sh
     permissions: '0755'
     encoding: 'gzip+base64'
     content: |
-      ${generate_biconfigcleaner_content}
+      ${createDataPartition_content}
 
 runcmd:
-  - echo "generating biconfig response file"
-  - bash /tmp/generate_biconfig.sh ${admin_user_name} ${admin_password} ${connect_string} ${new_db_admin_username} ${new_db_password} ${oas_rcu_schema_prefix} ${oas_rcu_schema_password}
-  - echo "generating script files for firewall config and opening firewall ports"
-  - bash /tmp/generate_oasfirewallportsconfig.sh
-  - bash /tmp/generate_openfirewallportsscript.sh
-  - sudo chmod 0755 /tmp/open_oas_firewall_ports.sh  
-  - echo "generating script file that creates domain"
-  - bash /tmp/generate_createdomainscript.sh
-  - sudo chmod 0755 /tmp/create_oas_domain.sh 
-  - echo "generating oas installer script"
-  - bash /tmp/generate_installerscript.sh
-  - sudo chmod 0755 /tmp/oas_installer.sh
-  - bash /tmp/generate_biconfigcleaner.sh
-  - sudo chmod 0755 /tmp/generate_biconfigcleaner.sh
-  - echo "delete generator files"
-  - sudo rm /tmp/generate_biconfig.sh
-  - sudo rm /tmp/generate_createdomainscript.sh
-  - sudo rm /tmp/generate_oasfirewallportsconfig.sh
-  - sudo rm /tmp/generate_openfirewallportsscript.sh
-  - sudo rm /tmp/generate_installerscript.sh
-  - sudo rm /tmp/generate_biconfigcleaner.sh
-  - bash /tmp/oas_installer.sh
-  - touch /tmp/oas_install.finish
+  - echo "[OAS_MP] move oas-scripts to u01 & Change ownership of folder and scripts under oas-scripts"
+  - mkdir /u01/app/oas-scripts/
+  - chown -R oracle:oracle /u01/app/oas-scripts/
+  - cp -R /tmp/oas-scripts/* /u01/app/oas-scripts
+  - chown -R oracle:oracle /u01/app/oas-scripts/*
+  - echo "[OAS_MP] Remove oas-scripts from tmp, they are now under /u01/app"
+  - sudo rm -R /tmp/oas-scripts/
+  - echo "[OAS_MP] Creating Data partition"
+  - bash -c /u01/app/oas-scripts/createDataPartition.sh
+  - echo "[OAS_MP] Generating biconfig response file"
+  - bash /u01/app/oas-scripts/generate_biconfig.sh ${admin_user_name} ${admin_password} ${connect_string} ${new_db_admin_username} ${new_db_password} ${oas_rcu_schema_prefix} ${oas_rcu_schema_password}
+  - echo "[OAS_MP] Change ownership and permission of biconfig"
+  - chown oracle:oracle /u01/data/biconfig.rsp
+  - sudo chmod 0600 /u01/data/biconfig.rsp 
+  - bash -c /u01/app/oas-scripts/oas_installer.sh
+  - echo "[OAS_MP] Restart sshd started"
+  - sudo systemctl restart sshd
+  - echo "[OAS_MP] Restart sshd finished"
+  - touch /u01/app/oas-scripts/oas_install.finish
