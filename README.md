@@ -96,12 +96,16 @@ The Stack Information section updates to show <b>Oracle Analytics Server - UCM</
     <th>Description</th> 
   </tr>
   <tr>
-    <td>Compartment</td>
+    <td>VCN Compartment</td>
     <td>Compartment containing the Virtual Cloud Network (VCN) you want to use. For example, <i>MyNetwork</i>.</td> 
   </tr>
 <tr>
     <td>Virtual Cloud Network</td>
     <td>Virtual cloud network (VCN) where you want to create the compute instance.</td> 
+  </tr>
+   <tr>
+    <td>Subnet Compartment</td>
+    <td>Compartment containing the subnet you want to use. For example, <i>MySubnet</i>.</td> 
   </tr>
   <tr>
     <td>Subnet</td>

@@ -14,8 +14,9 @@ module "computeinstance" {
   mp_OAS_listing_resource_version = var.mp_OAS_listing_resource_version
   mp_OAS_listing_id               = var.mp_OAS_listing_id
 
-  network_compartment_id = var.network_compartment_id
+  vcn_compartment_id     = var.vcn_compartment_id
   existing_vcn_id        = var.existing_vcn_id
+  subnet_compartment_id  = var.subnet_compartment_id
   subnet_id              = var.subnet_id
   ssh_authorized_keys    = var.ssh_authorized_keys
 

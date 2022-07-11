@@ -39,11 +39,15 @@ variable "mp_OAS_listing_id" {
   type = string
 }
 
-variable "network_compartment_id" {
+variable "vcn_compartment_id" {
   type = string
 }
 
 variable "existing_vcn_id" {
+  type = string
+}
+
+variable "subnet_compartment_id" {
   type = string
 }
 

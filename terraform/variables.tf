@@ -56,16 +56,22 @@ variable "mp_OAS_listing_id" {
   description = "Target image version"
 }
 
-variable "network_compartment_id" {
+variable "vcn_compartment_id" {
   type        = string
   default     = ""
-  description = "Network compartment details"
+  description = "Virtual Cloud Network compartment details"
 }
 
 variable "existing_vcn_id" {
   type        = string
   default     = ""
   description = "Existing VCN details"
+}
+
+variable "subnet_compartment_id" {
+  type        = string
+  default     = ""
+  description = "Subnet compartment details"
 }
 
 variable "subnet_id" {

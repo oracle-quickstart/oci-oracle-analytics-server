@@ -34,8 +34,9 @@ variableGroups:
 
   - title: "Network Configuration"
     variables:
-      - ${network_compartment_id}
+      - ${vcn_compartment_id}      
       - ${existing_vcn_id}
+      - ${subnet_compartment_id}      
       - ${subnet_id}
       - ${assign_public_ip}
 
@@ -177,9 +178,9 @@ variables:
       imageId: ${mp_OAS_listing_image_resource_id}
  
   # Network
-  network_compartment_id:
-    title: Network Compartment
-    description: The compartment in which the network resources exists.
+  vcn_compartment_id:  
+    title: VCN Compartment
+    description: The compartment in which the VCN resources exists.
     type: oci:identity:compartment:id
     required: true
 
@@ -189,14 +190,20 @@ variables:
     type: oci:core:vcn:id
     required: true
     dependsOn:
-      compartmentId: ${network_compartment_id}
+      compartmentId: ${vcn_compartment_id}
+
+  subnet_compartment_id:  
+    title: Subnet Compartment
+    description: The compartment in which the subnet resources exists.
+    type: oci:identity:compartment:id
+    required: true
 
   subnet_id:
     title: Subnet
     description: Select an existing subnet for the compute instance.
     type: oci:core:subnet:id
     dependsOn:
-      compartmentId: ${network_compartment_id}
+      compartmentId: ${subnet_compartment_id}
       vcnId: ${existing_vcn_id}
       hidePrivateSubnet: false
     required: true
@@ -277,7 +284,7 @@ variables:
 
   oas_rcu_schema_prefix:
     title: Database Schema Prefix
-    description: Provide new database schema prefix
+    description: Provide a unique database schema prefix
     maxLength: 12
     pattern: "^([a-zA-Z0-9])+$"
     type: string
@@ -286,7 +293,7 @@ variables:
 
   oas_rcu_schema_password:
     title: Database Schema Password
-    description: Provide new database schema password
+    description: Provide a database schema password
     type: password
     required: true
     visible: ${create_domain}
