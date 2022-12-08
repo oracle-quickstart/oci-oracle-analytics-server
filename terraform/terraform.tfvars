@@ -3,5 +3,5 @@
 
 # Listing details for the Oracle Analytics Server custom image for Bring Your Own License.
 mp_OAS_listing_id="ocid1.appcataloglisting.oc1..aaaaaaaa4jfofm2dkaigvmlrssdhy47pf2obig6dgpdg7deesmn7b5lxzfyq"
-mp_OAS_listing_resource_version="2022_(6.4)_0301"
-mp_OAS_listing_image_resource_id="ocid1.image.oc1..aaaaaaaa57ow2bb6bsr7ihce4puy7agkwow3cib7mddn6mapxv4llhd7sara"
+mp_OAS_listing_resource_version="5.9_0401"
+mp_OAS_listing_image_resource_id="ocid1.image.oc1..aaaaaaaajgyj4g52gtbbwl7hygvwibhknmr4at3yb7s2sk3jtdis7eb7xmta"
