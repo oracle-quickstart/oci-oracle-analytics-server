@@ -6,7 +6,7 @@ variable "marketplace_source_images" {
   }))
   default = {
     main_mktpl_image = {
-      ocid = "ocid1.image.oc1..aaaaaaaaccwupcyybckvqjbntn3dtx3rgsuf3q6uhnu2j4yym6s36osnxi7a"
+      ocid = "ocid1.image.oc1..aaaaaaaatxpnvzvzk3exabtfwqdpow5baj4kumsnrq3vybljqhs6k7zhta4a"
       is_pricing_associated = true
       compatible_shapes = ["VM.Standard2.1" , "VM.Standard2.16" , "VM.Standard2.2" , "VM.Standard2.24" , "VM.Standard2.4" , "VM.Standard2.8" , "VM.Standard.E3.Flex" , "VM.Standard.E4.Flex"]
     }
