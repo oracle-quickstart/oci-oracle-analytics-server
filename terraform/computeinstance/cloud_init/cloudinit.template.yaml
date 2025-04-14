@@ -1,9 +1,5 @@
 
 output: {all: '| tee -a /var/log/oas_cloudinit.log'}
-
-logcfg: |
-  [formatters]
-  format=%(levelname)s %(asctime)s: %(message)s
   
 write_files:
   - path: /tmp/oas-scripts/generate_biconfig.sh
