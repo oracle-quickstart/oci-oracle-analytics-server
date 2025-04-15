@@ -30,6 +30,9 @@ module "computeinstance" {
 
   create_domain    = var.create_domain
   assign_public_ip = var.assign_public_ip
+  biconfig_db_role = var.biconfig_db_role
+  is_atp_db = var.is_atp_db
+  atp_wallet_file_PAR_location = var.atp_wallet_file_PAR_location
 }
 
 output "instance_public_ip" {

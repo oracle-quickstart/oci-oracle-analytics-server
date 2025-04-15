@@ -44,6 +44,12 @@ write_files:
     content: |
       ${createDataPartition_content}
 
+  - path: /tmp/oas-scripts/generate_prep_atp_wallet.sh
+    permissions: '0755'
+    encoding: 'gzip+base64'
+    content: |
+      ${prepwallet_content}
+
 runcmd:
   - echo "[OAS_MP] move oas-scripts to u01 & Change ownership of folder and scripts under oas-scripts"
   - mkdir /u01/app/oas-scripts/
@@ -55,10 +61,14 @@ runcmd:
   - echo "[OAS_MP] Creating Data partition"
   - bash -c /u01/app/oas-scripts/createDataPartition.sh
   - echo "[OAS_MP] Generating biconfig response file"
-  - bash /u01/app/oas-scripts/generate_biconfig.sh ${admin_user_name} ${admin_password} ${connect_string} ${new_db_admin_username} ${new_db_password} ${oas_rcu_schema_prefix} ${oas_rcu_schema_password}
+  - bash /u01/app/oas-scripts/generate_biconfig.sh ${admin_user_name} ${admin_password} '${connect_string}' ${new_db_admin_username} ${new_db_password} ${oas_rcu_schema_prefix} ${oas_rcu_schema_password} ${biconfig_db_role}
   - echo "[OAS_MP] Change ownership and permission of biconfig"
   - chown oracle:oracle /u01/data/biconfig.rsp
   - sudo chmod 0600 /u01/data/biconfig.rsp 
+  - echo "[OAS_MP] Generating wallet file preparer file"
+  - bash /u01/app/oas-scripts/generate_prep_atp_wallet.sh ${atp_wallet_file_PAR_location}
+  - bash /u01/app/prep_atp_wallet.sh
+  - sudo rm /u01/app/prep_atp_wallet.sh
   - bash -c /u01/app/oas-scripts/oas_installer.sh
   - echo "[OAS_MP] Restart sshd started"
   - sudo systemctl restart sshd

@@ -12,23 +12,23 @@
 <p>This topology represents a simple Oracle Analytics Server deployment on Oracle Cloud Infrastructure using this Quick Start.</p>
 <p><img src="./images/oas_oc_top.jpg"></p>
 <h2>Prerequisites</h2>
-<p>Before you deploy Oracle Analytics Server on Oracle Cloud, you must complete various prerequisite tasks. Oracle recommends that you gather a list of the metadata that you'll need for the quick-deployment process and we provide a checklist to help you plan your deployment. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-054F8080-A6CB-46D2-9166-03D3D21DC8A7">Before you Begin</a>.</p>
+<p>Before you deploy Oracle Analytics Server on Oracle Cloud, you must complete various prerequisite tasks. Oracle recommends that you gather a list of the metadata that you'll need for the quick-deployment process and we provide a checklist to help you plan your deployment. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/you-begin.html#GUID-054F8080-A6CB-46D2-9166-03D3D21DC8A7">Before you Begin</a>.</p>
 <h3>Subscribe to Oracle Analytics Server on Oracle Cloud</h3>
-<p>You must have an active Oracle Cloud account (Pay As You Go or Annual Universal Credits) to deploy <i>Oracle Analytics Server - UCM</i> (Universal Credits) on Oracle Cloud Infrastructure. Alternatively, you must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server and sign up for an Oracle Cloud account to deploy <i>Oracle Analytics Server - BYOL</i> (Bring Your Own License). See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
+<p>You must have an active Oracle Cloud account (Pay As You Go or Annual Universal Credits) to deploy <i>Oracle Analytics Server - UCM</i> (Universal Credits) on Oracle Cloud Infrastructure. Alternatively, you must have an Oracle Fusion Middleware on-premises license for Oracle Analytics Server and sign up for an Oracle Cloud account to deploy <i>Oracle Analytics Server - BYOL</i> (Bring Your Own License). See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/subscribe-oracle-analytics-server-oracle-cloud.html#GUID-821E02BC-169D-41EE-9256-A296E9EC73EE">Subscribe to Oracle Analytics Server on Oracle Cloud</a>.</p>
 <h3>Set Up Policies in Oracle Cloud Infrastructure</h3>
-<p>In Oracle Cloud Infrastructure, you use policies to control access to resources in your tenancy. Before deploying Oracle Analytics Server on a compartment in Oracle Cloud Infrastructure, your tenant administrator must set up policies that enables you (or other users) to access or create resources in specific compartments. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-92B99C32-314E-4565-AD1B-C19CA68AB52C">Set Up Policies in Oracle Cloud Infrastructure</a>.</p>
+<p>In Oracle Cloud Infrastructure, you use policies to control access to resources in your tenancy. Before deploying Oracle Analytics Server on a compartment in Oracle Cloud Infrastructure, your tenant administrator must set up policies that enables you (or other users) to access or create resources in specific compartments. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/set-policies-oracle-cloud-infrastructure.html#GUID-92B99C32-314E-4565-AD1B-C19CA68AB52C">Set Up Policies in Oracle Cloud Infrastructure</a>.</p>
 <h3>Create Compartments</h3>
-<p>Before you deploy Oracle Analytics Server on Oracle Cloud, Oracle recommends that you set up the compartment where you want all the resources associated with Oracle Analytics Server to belong. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-16204AC6-9155-4762-8E01-E940CCB5BC10">Create Compartments</a>.</p>
+<p>Before you deploy Oracle Analytics Server on Oracle Cloud, Oracle recommends that you set up the compartment where you want all the resources associated with Oracle Analytics Server to belong. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/create-compartments.html#GUID-16204AC6-9155-4762-8E01-E940CCB5BC10">Create Compartments</a>.</p>
 <h3>Set Up Network Resources</h3>
-<p>You or your network administrator must set up a virtual cloud network (VCN) and a subnet for your Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-7C30CE28-CBB4-429F-B39E-270A777008C8">Set Up Network Resources</a>.</p>
+<p>You or your network administrator must set up a virtual cloud network (VCN) and a subnet for your Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/set-network-resources.html#GUID-7C30CE28-CBB4-429F-B39E-270A777008C8">Set Up Network Resources</a>.</p>
 <h3>Set Up Oracle Cloud Database</h3>
-<p>When you deploy Oracle Analytics Server on Oracle Cloud using this Quick Start, you're asked to provide the database connection string and database administrator credentials for an existing database you want to use. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-C8C5D819-5EB5-4EE2-98EF-F6093E850B0E">Set Up an Oracle Cloud Database</a>.</p>
+<p>When you deploy Oracle Analytics Server on Oracle Cloud using this Quick Start, you're asked to provide the database connection string and database administrator credentials for an existing database you want to use. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/set-oracle-cloud-database.html#GUID-C8C5D819-5EB5-4EE2-98EF-F6093E850B0E">Set Up an Oracle Cloud Database</a> and <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/prerequistes-oracle-autonomous-transaction-processing-atp-database.html">Prerequisites for an Oracle Autonomous Transaction Processing (ATP) Database</a>.</p>
 <h3>Plan Compute Shape and Boot Volume Size</h3>
-<p>You can deploy Oracle Analytics Server on a range of compute shapes to suit different scenarios. If you're not sure which sizes to use, contact your sales team to discuss sizing guidelines.  See also <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-CCFE432C-C6E4-4FB1-A73C-8155CB32A069">Plan Compute Shape and Boot Volume Size</a>.</p>
+<p>You can deploy Oracle Analytics Server on a range of compute shapes to suit different scenarios. If you're not sure which sizes to use, contact your sales team to discuss sizing guidelines.  See also <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/plan-compute-shape-and-boot-volume-size.html#GUID-CCFE432C-C6E4-4FB1-A73C-8155CB32A069">Plan Compute Shape and Boot Volume Size</a>.</p>
 <h3>Generate SSH Keys</h3>
-<p>You must generate the SSH public key and corresponding private key you want to use to access the Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-4F4ED109-8D4F-4A2A-80B4-28E660013AE8">Generate SSH Keys</a>.</p>
+<p>You must generate the SSH public key and corresponding private key you want to use to access the Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/generate-ssh-keys.html#GUID-4F4ED109-8D4F-4A2A-80B4-28E660013AE8">Generate SSH Keys</a>.</p>
 <h3>Complete Predeployment Checklist</h3>
-<p>Use a checklist to plan your deployment and ensure you've completed all the prerequisite tasks. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-F34E9A58-B40B-4FC1-9279-BB13A13BF972">Complete Checklist</a>.</p>
+<p>Use a checklist to plan your deployment and ensure you've completed all the prerequisite tasks. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/complete-predeployment-checklist.html">Complete Checklist</a>.</p>
 <h2>Deploy Oracle Analytics Server using Resource Manager</h2>
 <p>Download the Quick Start Terraform scripts from GitHub and then use Resource Manager to deploy Oracle Analytics Server on Oracle Cloud Infrastructure. </p>
 <ol>
@@ -128,6 +128,10 @@ The Stack Information section updates to show <b>Oracle Analytics Server - UCM</
         <p>Don't select <i>Create Oracle Analytics Server Domain</i>, if you want to create an additional Oracle Analytics Server
 compute instance to scale out an existing Oracle Analytics Server deployment.</p></td> 
   </tr><tr>
+    <td>Use Oracle ATP Database</td>
+    <td>Select if the database where you plan to store Oracle Analytics Server product schemas is Oracle Autonomous Transaction Processing (ATP). Deselect if you plan to use Oracle Database.</td> 
+  </tr>
+<tr>
     <td>Analytics Administrator Username</td>
     <td>Name of the user who will administer Oracle Analytics Server.
         <p>Because this is a new user, you can enter any suitable username. For example, <i>myoasadmin</i>.</p></td> 
@@ -138,8 +142,11 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
   </tr>
 <tr>
     <td>Database Connection String</td>
-    <td>Connection string for the database you want to use to store Oracle Analytics Server product schemas. The database must be a pluggable database (PDB) on an Oracle Cloud virtual machine DB system.
-<p>Use the format: <i>hostname_or_IP address:port:PDB_name.DB_domain</i></p> 
+    <td>Connection string for the database you want to use to store Oracle Analytics Server product schemas. The database must be a pluggable database (PDB) on an Oracle Cloud virtual machine DB system  (either Oracle ATP or Oracle Database).
+<p><b>Oracle Autonomous Transaction Processing (ATP)</b> - Use the database connection string format:</p> <code>jdbc:oracle:thin:@(description= (address=(protocol=tcps)(port=<i>port</i>)(host=<i>your_hostname_or_ip_address</i>))(connect_data=(service_name=<i>your_ATP_service_name</i>)) </code>
+<p>For example:</p> <code>jdbc:oracle:thin:@(description= (address=(protocol=tcps)(port=1521)(host=adb.us-ashburn-1.oraclecloud.com))(connect_data=(service_name=myoasdb_medium.adb.oraclecloud.com))(retry_count=20)(retry_delay=3)(security=(ssl_server_dn_match=no)))</code>
+<p>If you haven't done so already, you can obtain the connection string from the ATP wallet.</p>
+<p><b>Oracle Database</b> - Use the database connection string format:</p> <code>hostname_or_IP address:port:PDB_name.DB_domain</code>
 <p>For example: </p> <code>oasdb.sub12345678901.oasvcn.oraclevcn.com:1512:OASDB1213_pdb1.sub12345678901.oasvcn.oraclevcn.com</code>
 </td> 
   </tr>
@@ -160,6 +167,13 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
     <td>Database Schema Password</td>
     <td>Password to access the database schemas used by Oracle Analytics Server. Because this is a new password, you can enter any suitable value.</td> 
  </tr>
+<tr>
+    <td>URL for the ATP Wallet in Object Storage</td>
+    <td>Pre-authenticated request URL with access to the Autonomous Transaction Processing (ATP) wallet that you uploaded to Object Storage.
+     <p>Use the format:</p> <code>https://<i>object storage location</i>/<i>ATP wallet zip filename</i></code> 
+     <p>For example:</p> <code>https://objectstorage.<i>region</i>.oraclecloud.com/p/par_ID/n/namespace_ID/b/mybucket/o/myATPwallet.zip</code></td> 
+ </tr>
+
 </table>
 </li>
 <li>Click <b>Next</b>, and review the configuration.</li>
@@ -172,7 +186,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p>Download the Quick Start Terraform scripts from GitHub, modify two configuration files (<code>provider.tf</code> and <code>variable.tf</code>), and then run the <code>terraform</code> <code>init,</code> <code>plan</code> and <code>apply</code> commands to deploy Oracle Analytics Server on Oracle Cloud Infrastructure.</p>
 <ol>
 <li>Complete all the prerequisites tasks and record the information you need in the checklist provided.</li>
-<li>Install Terraform version 0.12.x. For example, you can run the following command on Mac with Homebrew:
+<li>Install Terraform version 1.0.x or later. For example, you can run the following command on Mac with Homebrew:
    <p><code>brew install terraform@0.12</code></p></li>
 <li>Sign into Oracle Cloud Infrastructure Console and collect your user, tenancy, and signing key details. See <a href="https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm#To_get_a_config_file_snippet_API_signing_key" rel="nofollow">How to get the config file snippet for an API signing key</a>.</li>
 <li>Obtain the code from GitHub either by cloning the repository or by performing the following steps:
@@ -226,7 +240,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 </ol>
 
 <h2>Post-Deployment Tasks</h2>
-<p>Refer to the documentation for a list of post-deployment tasks. See <a href="https://docs.us.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/deploy-oracle-analytics-server-oracle-cloud.html#GUID-4DA72FBE-C456-49B7-8424-56DE890CD886">Complete Post Deployment Tasks</a>. </p>
+<p>Refer to the documentation for a list of post-deployment tasks. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/complete-deployment-tasks.html#GUID-4DA72FBE-C456-49B7-8424-56DE890CD886">Complete Post Deployment Tasks</a>. </p>
 
 <h2>Using OCI Resource Manager</h2>
 <p>Oracle Cloud Infrastructure Resource Manager (ORM) allows you to manage your Terraform configurations and state. You might need to update your policies to access the ORM service. </p>

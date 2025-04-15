@@ -139,3 +139,21 @@ variable "oas_rcu_schema_password" {
   default     = ""
   description = "Schema password"
 }
+
+variable "is_atp_db" {
+  type        = bool
+  default     = false
+  description = "option to defien if Target DB is of ATP DB"
+}
+
+variable "atp_wallet_file_PAR_location" {
+  type        = string
+  default     = ""
+  description = "Location of wallet file it DB is ATP DB"
+}
+
+variable "biconfig_db_role" {
+  type        = string
+  default     = "SYSDBA"
+  description = "Users Database Role"
+}

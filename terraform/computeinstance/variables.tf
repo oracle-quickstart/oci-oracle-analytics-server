@@ -88,3 +88,12 @@ variable "oas_rcu_schema_prefix" {
 variable "oas_rcu_schema_password" {
   type      = string
 }
+variable "is_atp_db" {
+  type = bool
+}
+variable "atp_wallet_file_PAR_location" {
+  type = string
+}
+variable "biconfig_db_role" {
+  type = string
+}
