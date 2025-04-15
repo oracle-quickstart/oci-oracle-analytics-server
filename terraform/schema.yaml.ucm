@@ -43,6 +43,7 @@ variableGroups:
   - title: "Oracle Analytics Server Domain Configuration"
     variables:
     - ${create_domain}
+    - ${is_atp_db}
     - ${admin_user_name}
     - ${admin_password}
     - ${connect_string}
@@ -50,6 +51,7 @@ variableGroups:
     - ${new_db_password}
     - ${oas_rcu_schema_prefix}
     - ${oas_rcu_schema_password}
+    - ${atp_wallet_file_PAR_location}
 
 variables:
   # General Configuration
@@ -247,6 +249,13 @@ variables:
             - ${region}
             - "us-gov-chicago-1"
 
+  is_atp_db :
+    title: Use Oracle ATP Database
+    description: Select if the Oracle Cloud database where you plan to store Oracle Analytics Server product schemas is an Autonomous Transaction Processing (ATP) database. Deselect for all other Oracle Cloud database types.
+    type: boolean
+    default: false
+    visible: ${create_domain}
+
   admin_user_name:
     title: Analytics Administrator Username
     description: Provide the name of the user that will administer Oracle Analytics Server
@@ -263,10 +272,24 @@ variables:
 
   connect_string:
     title: Database Connection String
-    description: Provide a connection string for the database in the format '<hostname or IP address>:<port>:<PDB_name>.<DB_domain>'. The database must be an Oracle Cloud virtual machine DB system.   
+    description: "Provide a connection string for the database. The database must be an Oracle Cloud virtual machine DB system. For an ATP database, use the format: 'jdbc:oracle:thin:@(description=(address=(protocol=tcps)(host=<hostname or IP address>)(port=<port>))(connect_data=(service_name=<ATP DB service>))(security=(ssl_server_cert_dn=<certificate_info>)))'. For all other database types, use the format: '<hostname or IP address>:<port>:<PDB_name>.<DB_domain>'"
     type: string
     required: true
     visible: ${create_domain}
+
+  atp_wallet_file_PAR_location:
+    title: URL for the ATP Wallet in Object Storage
+    description: "Provide a pre-authenticated request URL with access to the Autonomous Transaction Processing (ATP) wallet uploaded to Object Storage. Use the format: https://<object storage location>/<wallet zip filename>"
+    type: string
+    required: true
+    visible:
+     and :
+      - eq:
+        - ${create_domain}
+        - true
+      - eq:
+        - ${is_atp_db}
+        - true
 
   new_db_admin_username:
     title: Database Administrator Username
@@ -297,6 +320,10 @@ variables:
     type: password
     required: true
     visible: ${create_domain}
+
+  biconfig_db_role:
+    required: false
+    visible: false
 
   # Marketplace configuration
   marketplace_source_images:

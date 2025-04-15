@@ -21,6 +21,10 @@ data "template_file" "cloud_init_file" {
     installerscript_content = var.create_domain ? base64gzip(file("${path.module}/templates/oas_installer.sh")) : base64gzip(file("${path.module}/templates/skip_oas_installer.sh"))
     biconfigcleaner_content = base64gzip(file("${path.module}/templates/biconfigcleaner.sh"))
     createDataPartition_content = base64gzip(file("${path.module}/templates/createDataPartition.sh"))
+    is_atp_db = var.is_atp_db
+    atp_wallet_file_PAR_location = var.is_atp_db ? var.atp_wallet_file_PAR_location : "No wallet file to download"
+    prepwallet_content = var.is_atp_db ? base64gzip(file("${path.module}/templates/prepare_atp_wallet.sh")) : base64gzip(file("${path.module}/templates/skip_prepare_atp_wallet.sh"))
+    biconfig_db_role = var.is_atp_db ? "NORMAL" : "SYSDBA"
   }
 }
 
