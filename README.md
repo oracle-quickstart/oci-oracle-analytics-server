@@ -249,8 +249,14 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p><code>allow group mygroup_name to use virtual-network-family in compartment mycompartment_name</code></p>
 <p><code>allow group mygroup_name to manage orm-family in compartment mycompartment_name</code></p>
 
+<h2>Security</h2>
+<p>Please consult the <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/SECURITY.md">security guide</a> for our responsible security vulnerability disclosure process.</p>
+
+<h2>Contributing</h2>
+<p>This project welcomes contributions from the community. Before submitting a pull request, please <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/CONTRIBUTING.md">review our contribution guide</a>.</p>
+
 <h2>License</h2>
-<p>These Terraform scripts are licensed under the Universal Permissive License 1.0. See <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/LICENSE">LICENSE</a> for more details.</p>
+<p>These Terraform scripts are licensed under the Universal Permissive License 1.0. See <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/LICENSE.txt">LICENSE</a> for more details.</p>
 <p>There are two licensing options available:</p>
 <h3>Universal Credits Model (UCM)</h3>
 <p>When you deploy Oracle Analytics Server using UCM, the Oracle Analytics Server license is governed by the following Licensing terms: https://cloudmarketplace.oracle.com/marketplace/content?contentId=70514770&render=inline</p>
