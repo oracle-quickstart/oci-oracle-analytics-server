@@ -253,7 +253,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p>Please consult the <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/SECURITY.md">security guide</a> for our responsible security vulnerability disclosure process.</p>
 
 <h2>Contributing</h2>
-<p>This project welcomes contributions from the community. Before submitting a pull request, please <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/CONTRIBUTING.md">review our contribution guide</a>.</p>
+<p>This project is not accepting external contributions at this time. For bugs or enhancement requests, please file a GitHub issue unless it’s security related. When filing a bug remember that the better written the bug is, the more likely it is to be fixed. If you think you’ve found a security vulnerability, do not raise a GitHub issue and follow the instructions in our <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/SECURITY.md">security guide</a>.
 
 <h2>License</h2>
 <p>These Terraform scripts are licensed under the Universal Permissive License 1.0. See <a href="https://github.com/oracle-quickstart/oci-oracle-analytics-server/blob/master/LICENSE.txt">LICENSE</a> for more details.</p>
@@ -265,3 +265,4 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <p>BYOL requires an Oracle Fusion Middleware on-premise license for Oracle Analytics Server, and an active support contract.</p>
 <h2>Questions</h2>
 <p>If you have an issue or a question, review our <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/frequently-asked-questions.html">FAQs</a> page. </p>
+
