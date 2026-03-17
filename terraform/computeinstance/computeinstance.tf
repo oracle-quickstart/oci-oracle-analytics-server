@@ -1,5 +1,5 @@
 locals {
-  is_flex_shape     = (var.instance_shape == "VM.Standard.E4.Flex") || (var.instance_shape == "VM.Standard.E3.Flex")
+  is_flex_shape     = (var.instance_shape == "VM.Standard.E4.Flex") || (var.instance_shape == "VM.Standard.E3.Flex")|| (var.instance_shape == "VM.Standard.E5.Flex")
   flex_shape_config = local.is_flex_shape ? [{ "ocpus" : var.ocpus, "memory_in_gbs" : var.memory_in_gbs }] : []
 }
 
@@ -36,6 +36,10 @@ resource "oci_core_instance" "OAS_MP_instance" {
   }
 
   preserve_boot_volume = false
+
+  instance_options {
+    are_legacy_imds_endpoints_disabled = true
+  }
 
 }
 

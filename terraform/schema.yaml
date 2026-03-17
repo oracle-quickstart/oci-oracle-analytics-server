@@ -151,6 +151,9 @@ variables:
       - eq:
         - ${instance_shape}
         - "VM.Standard.E4.Flex"
+      - eq:
+        - ${instance_shape}
+        - "VM.Standard.E5.Flex"
 
   memory_in_gbs:
     title: Memory
@@ -168,6 +171,9 @@ variables:
       - eq:
         - ${instance_shape}
         - "VM.Standard.E4.Flex"
+      - eq:
+        - ${instance_shape}
+        - "VM.Standard.E5.Flex"
   
   instance_shape:
     title: Shape

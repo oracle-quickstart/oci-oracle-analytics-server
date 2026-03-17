@@ -22,7 +22,7 @@
 <h3>Set Up Network Resources</h3>
 <p>You or your network administrator must set up a virtual cloud network (VCN) and a subnet for your Oracle Analytics Server compute instance before you start. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/set-network-resources.html#GUID-7C30CE28-CBB4-429F-B39E-270A777008C8">Set Up Network Resources</a>.</p>
 <h3>Set Up Oracle Cloud Database</h3>
-<p>When you deploy Oracle Analytics Server on Oracle Cloud using this Quick Start, you're asked to provide the database connection string and database administrator credentials for an existing database you want to use. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/set-oracle-cloud-database.html#GUID-C8C5D819-5EB5-4EE2-98EF-F6093E850B0E">Set Up an Oracle Cloud Database</a> and <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/prerequistes-oracle-autonomous-transaction-processing-atp-database.html">Prerequisites for an Oracle Autonomous Transaction Processing (ATP) Database</a>.</p>
+<p>When you deploy Oracle Analytics Server on Oracle Cloud using this Quick Start, you're asked to provide the database connection string and database administrator credentials for an existing database you want to use. See <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/set-oracle-cloud-database.html#GUID-C8C5D819-5EB5-4EE2-98EF-F6093E850B0E">Set Up an Oracle Cloud Database</a> and <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/prerequistes-oracle-autonomous-ai-transaction-processing-atp-database.html">Prerequisites for an Oracle Autonomous AI Transaction Processing (ATP) Database</a>.</p>
 <h3>Plan Compute Shape and Boot Volume Size</h3>
 <p>You can deploy Oracle Analytics Server on a range of compute shapes to suit different scenarios. If you're not sure which sizes to use, contact your sales team to discuss sizing guidelines.  See also <a href="https://docs.oracle.com/en/middleware/bi/analytics-server/deploy-oas-cloud/plan-compute-shape-and-boot-volume-size.html#GUID-CCFE432C-C6E4-4FB1-A73C-8155CB32A069">Plan Compute Shape and Boot Volume Size</a>.</p>
 <h3>Generate SSH Keys</h3>
@@ -129,7 +129,7 @@ The Stack Information section updates to show <b>Oracle Analytics Server - UCM</
 compute instance to scale out an existing Oracle Analytics Server deployment.</p></td> 
   </tr><tr>
     <td>Use Oracle ATP Database</td>
-    <td>Select if the database where you plan to store Oracle Analytics Server product schemas is Oracle Autonomous Transaction Processing (ATP). Deselect if you plan to use Oracle Database.</td> 
+    <td>Select if the database where you plan to store Oracle Analytics Server product schemas is Oracle Autonomous AI Transaction Processing (ATP). Deselect if you plan to use Oracle Database.</td> 
   </tr>
 <tr>
     <td>Analytics Administrator Username</td>
@@ -143,7 +143,7 @@ compute instance to scale out an existing Oracle Analytics Server deployment.</p
 <tr>
     <td>Database Connection String</td>
     <td>Connection string for the database you want to use to store Oracle Analytics Server product schemas. The database must be a pluggable database (PDB) on an Oracle Cloud virtual machine DB system  (either Oracle ATP or Oracle Database).
-<p><b>Oracle Autonomous Transaction Processing (ATP)</b> - Use the database connection string format:</p> <code>jdbc:oracle:thin:@(description= (address=(protocol=tcps)(port=<i>port</i>)(host=<i>your_hostname_or_ip_address</i>))(connect_data=(service_name=<i>your_ATP_service_name</i>)) </code>
+<p><b>Oracle Autonomous AI Transaction Processing (ATP)</b> - Use the database connection string format:</p> <code>jdbc:oracle:thin:@(description= (address=(protocol=tcps)(port=<i>port</i>)(host=<i>your_hostname_or_ip_address</i>))(connect_data=(service_name=<i>your_ATP_service_name</i>)) </code>
 <p>For example:</p> <code>jdbc:oracle:thin:@(description= (address=(protocol=tcps)(port=1521)(host=adb.us-ashburn-1.oraclecloud.com))(connect_data=(service_name=myoasdb_medium.adb.oraclecloud.com))(retry_count=20)(retry_delay=3)(security=(ssl_server_dn_match=no)))</code>
 <p>If you haven't done so already, you can obtain the connection string from the ATP wallet.</p>
 <p><b>Oracle Database</b> - Use the database connection string format:</p> <code>hostname_or_IP address:port:PDB_name.DB_domain</code>
